@@ -1,0 +1,356 @@
+@charset "UTF-8";
+strong {
+  font-weight: bold; /* ou 700 */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-weight: normal;
+  text-decoration: none;
+}
+
+html {
+  font-size: 10px;
+}
+
+body {
+  font-family: "roboto";
+  font-size: 1.6rem;
+}
+
+html, body {
+  height: 100%;
+}
+
+.grid {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.container-header {
+  flex: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.container {
+  margin-left: 25rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.title, .footer {
+  background-color: #F0515A;
+  height: 6.4rem;
+  color: #fff;
+  padding: 2rem;
+}
+.title h1, .footer h1 {
+  text-transform: uppercase;
+  font-size: 2rem;
+}
+
+.action {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 90%;
+  margin: 3.5rem auto;
+}
+
+header {
+  position: fixed;
+  background-color: #323232;
+}
+header nav {
+  margin-top: 10rem;
+}
+header nav a {
+  text-decoration: none;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  gap: 1rem;
+  padding: 1rem 3rem;
+  align-items: center;
+}
+
+.primary-btn {
+  display: inline-flex; /* pour aligner l'icône et le texte */
+  align-items: center; /* aligne verticalement */
+  gap: 8px; /* espace entre l'icône et le texte */
+  background-color: #F0515A;
+  color: #FFFFFF;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.primary-btn img {
+  width: 16px; /* ajuste selon ta préférence */
+  height: 16px;
+}
+
+.primary-btn:hover {
+  background-color: #b81d27; /* une teinte plus foncée au hover */
+  transform: translateY(-2px); /* effet léger de "lift" */
+}
+
+.primary-btn:active {
+  transform: translateY(0); /* appuie sur le bouton */
+}
+
+.secondary-btn {
+  display: inline-flex; /* pour aligner l'icône et le texte */
+  align-items: center; /* aligne verticalement */
+  gap: 8px; /* espace entre l'icône et le texte */
+  background-color: #F0515A;
+  color: #FFFFFF;
+  border: 1px solid #fff;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.secondary-btn img {
+  width: 16px; /* ajuste selon ta préférence */
+  height: 16px;
+}
+
+.secondary-btn:hover {
+  background-color: #b81d27; /* une teinte plus foncée au hover */
+  transform: translateY(-2px); /* effet léger de "lift" */
+}
+
+.secondary-btn:active {
+  transform: translateY(0); /* appuie sur le bouton */
+}
+
+.search-container {
+  position: relative; /* conteneur parent */
+  width: 500px; /* la largeur que tu veux */
+}
+
+#searchBar {
+  width: 100%;
+  padding: 10px 40px 10px 10px; /* espace à droite pour l'icône */
+  border: 1px solid #B7B7B7;
+}
+
+.search-icon {
+  position: absolute;
+  right: 10px; /* ajuste comme tu veux */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px; /* taille de l’icône */
+  height: 20px;
+  cursor: pointer;
+}
+
+/* Le tableau */
+table {
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 3.5rem;
+  font-family: Arial, sans-serif;
+  border-collapse: collapse;
+  text-align: left;
+  background-color: white;
+}
+table td, table th {
+  border: none;
+  padding: 12px 10px;
+}
+
+/* L'en-tête */
+thead {
+  background-color: #333;
+  color: white;
+}
+thead th {
+  font-weight: bold;
+}
+
+/* Lignes du corps */
+tbody tr {
+  transition: background-color 0.3s;
+}
+
+/* Colonne "En stock" avec l'icône circulaire */
+td img[alt="En stock icon"] {
+  width: 20px;
+  height: 20px;
+}
+td button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+td button img {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.2s;
+}
+td button:hover img {
+  transform: scale(1.2);
+}
+
+/* Optionnel : Ajuste la largeur de tes colonnes */
+th:nth-child(1),
+td:nth-child(1) {
+  width: 10%;
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+  width: 15%;
+}
+
+th:nth-child(3),
+td:nth-child(3) {
+  width: 40%;
+}
+
+th:nth-child(4),
+td:nth-child(4) {
+  width: 10%;
+}
+
+th:nth-child(5),
+td:nth-child(5) {
+  width: 10%;
+  text-align: center;
+}
+
+th:nth-child(6),
+th:nth-child(7),
+th:nth-child(8),
+td:nth-child(6),
+td:nth-child(7),
+td:nth-child(8) {
+  width: 5%;
+  text-align: center;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 2rem;
+}
+
+input, select {
+  width: 100%;
+  padding: 0.5rem;
+}
+
+input[type=checkbox] {
+  width: auto; /* La checkbox ne doit pas être à 100% */
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+textarea {
+  resize: none;
+  height: 21rem;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  font-size: 2rem;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: auto; /* No left position */
+  right: 0; /* Start from the right edge */
+  top: 0; /* Start from the top */
+  width: calc(100% - 25rem); /* Take full width minus 25rem */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.6); /* Dark background */
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  padding: 0;
+  border: 1px solid #888;
+  width: 100%; /* Take full width inside modal */
+  height: 100%; /* Ensure modal content fills the container */
+  overflow-y: auto; /* Enable vertical scroll if content overflows */
+}
+
+/* The Close Button */
+.close {
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+  position: absolute;
+  right: 16px;
+  top: 16px;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Modal Header */
+.modal-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #F0515A;
+  color: #fff;
+  padding: 1rem 2rem;
+}
+
+.modal-header h2 {
+  text-transform: uppercase;
+  font-size: 2rem;
+  margin: 0;
+}
+
+/* Modal Body */
+.modal-body {
+  margin: 9rem auto;
+  width: 80%;
+}
+
+.img-produit {
+  width: 100%;
+  object-fit: contain;
+}
+
+/*# sourceMappingURL=styles.css.map */

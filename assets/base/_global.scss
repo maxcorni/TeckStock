@@ -1,0 +1,45 @@
+html, body {
+    height: 100%;
+}
+
+.grid {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    justify-content: space-between; 
+}
+
+.container-header {
+    flex: 0; 
+    display: flex;
+    flex-direction: column;
+    height: 100%; 
+}
+
+.container {
+    margin-left: 25rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%; 
+}
+
+.title, .footer{
+    background-color: #F0515A;
+    height: 6.4rem;
+    color: #fff;
+    padding: 2rem;
+    h1{
+        text-transform: uppercase;
+        font-size: 2rem;
+    }
+}
+
+.action{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 90%;
+    margin: 3.5rem auto;
+}
+

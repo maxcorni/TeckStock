@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Backoffice</title>
+    <!-- <link rel="icon" type="image/png" href="favicon.png"> -->
+    <meta name="description" content="C'est le back office de mon site web">
+    <link rel="stylesheet" href="fonts/styles.css">
+	<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+	<div class="grid">
+		<header class="container-header">
+			<div class="logo-image">
+				<img src="assets/images/icons/logo-my-market.png" alt="Logo su site my market">
+			</div>
+			<nav>
+				<ul>
+					<li><a href="#"><img src="assets/images/icons/file-text.png" alt="icon document">Comptabilité</a></li>
+					<li><a href="#"><img src="assets/images/icons/shopping-bag.png" alt="icon panier">Produits</a></li>
+					<li><a href="#"><img src="assets/images/icons/truck.png" alt="icon truc">Fournisseur</a></li>
+					<li><a href="#"><img src="assets/images/icons/archive.png" alt="icon carton">Commandes</a></li>
+					<li><a href="#"><img src="assets/images/icons/settings.png" alt="icon gear">Paramètres</a></li>
+				</ul>
+			</nav>
+		</header>
+		<main class="container">
+			<div class="title">
+				<h1>Liste des produits</h1>
+			</div>
+			<div class="action">
+				<div class="search-container">
+					<input type="text" id="searchBar" placeholder="Rechercher">
+					<img src="assets/images/icons/search.png" alt="Recherche" class="search-icon">
+				</div>
+				<div class="row">
+					<div class="trash-button">
+						<button class="primary-btn" id="trashButton">Poubelle</button>
+					</div>
+					<div class="add-button">
+						<button class="primary-btn" id="addButton"><img src="assets/images/icons/plus.png" alt="Plus icon">Ajouter</button>
+					</div>
+				</div>
+			</div>
+			<table border="1">
+				<thead>
+					<tr>
+						<th>Réference</th>
+						<th>Catégorie</th>
+						<th>Libelle</th>
+						<th>Prix</th>
+						<th>En stock</th>
+						<th colspan="3">Actions</th>
+					</tr>
+				</thead>
+				<tbody id="listeProduits"></tbody>
+			</table>
+			<div class="footer"></div>
+		</main>
+	</div>
+	<div id="addProductModal" class="modal">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h2>Ajouter un produit</h2>
+				<button class="secondary-btn" id="closeButton"><img src="assets/images/icons/back-arrow.png" alt="back icon">Retour</button>
+			</div>
+			<div class="modal-body">
+				<form id="form">
+					<div class="row">
+						<div class="col">				
+							<div>
+								<label for="reference">Référence</label>
+								<input type="text" name="reference" id="reference">
+							</div>
+				
+							<div>
+								<label for="categorie">Catégorie</label>
+								<select id="categorie" name="categorie">
+								</select>
+							</div>
+				
+							<div>
+								<label for="libelle">Libellé</label>
+								<input type="text" name="libelle" id="libelle">
+							</div>
+				
+							<div>
+								<label for="prix">Prix de vente conseillé</label>
+								<input type="text" name="prix" id="prix">
+							</div>
+				
+							<div>
+								<label for="photo">Photos</label>
+								<input type="text" name="photo" id="photo">
+							</div>
+						</div>
+						<div class="col">
+							<div>
+								<label for="description">Description</label>
+								<textarea name="description" id="description" rows="4"></textarea>
+							</div>
+
+							<div>
+								<label for="stock">Stock</label>
+								<input type="checkbox" id="stock" name="stock" class="checkbox">
+							</div>
+							<button type="submit" class="primary-btn">
+								<img src="assets/images/icons/save.png" alt="save icon">Enregistrer
+							</button>
+						</div>
+					</div>
+				</form>				
+			</div>
+		</div>
+	</div>
+	<div id="trashModal" class="modal">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h2>Ajouter un produit</h2>
+				<button class="secondary-btn" id="closeTrashButton"><img src="assets/images/icons/back-arrow.png" alt="back icon">Retour</button>
+			</div>
+			<div class="modal-body">
+				<table border="1">
+					<thead>
+						<tr>
+							<th>Réference</th>
+							<th>Catégorie</th>
+							<th>Libelle</th>
+							<th>Prix</th>
+							<th>En stock</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody id="listeProduits"></tbody>
+				</table>
+				<div class="footer"></div>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="script.js"></script>
+</html>
+

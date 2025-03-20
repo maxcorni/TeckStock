@@ -1,0 +1,17 @@
+header{
+    position: fixed;
+    background-color: #323232;
+    nav{
+        margin-top: 10rem;
+        a{
+            text-decoration: none;
+            color: white;
+            display: flex;
+            flex-direction: row;
+            justify-content: left;
+            gap: 1rem;
+            padding: 1rem 3rem;
+            align-items: center;
+        }
+    }
+}

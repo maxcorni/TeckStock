@@ -1,0 +1,21 @@
+
+.search-container {
+  position: relative; /* conteneur parent */
+  width: 500px; /* la largeur que tu veux */
+}
+
+#searchBar {
+  width: 100%;
+  padding: 10px 40px 10px 10px; /* espace à droite pour l'icône */
+  border: 1px solid #B7B7B7;
+}
+
+.search-icon {
+  position: absolute;
+  right: 10px; /* ajuste comme tu veux */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px; /* taille de l’icône */
+  height: 20px;
+  cursor: pointer;
+}
