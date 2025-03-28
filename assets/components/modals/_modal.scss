@@ -67,3 +67,14 @@
     width: 100%;
     object-fit: contain;
 }
+
+
+@media (max-width: 1000px) {
+    .modal {
+        width: 100%; 
+        margin-top: 5.8rem;
+        .modal-body {
+            width: 100%;
+        }
+    }
+}

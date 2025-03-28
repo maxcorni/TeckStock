@@ -1,4 +1,31 @@
 @charset "UTF-8";
+.secondary-btn, .primary-btn, .refresh-btn {
+  display: inline-flex; /* pour aligner l'icône et le texte */
+  align-items: center; /* aligne verticalement */
+  gap: 8px; /* espace entre l'icône et le texte */
+  background-color: #F0515A;
+  color: #FFFFFF;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.secondary-btn img, .primary-btn img, .refresh-btn img {
+  width: 16px; /* ajuste selon ta préférence */
+  height: 16px;
+}
+
+.secondary-btn:hover, .primary-btn:hover, .refresh-btn:hover {
+  background-color: #b81d27; /* une teinte plus foncée au hover */
+  transform: translateY(-2px); /* effet léger de "lift" */
+}
+
+.secondary-btn:active, .primary-btn:active, .refresh-btn:active {
+  transform: translateY(0); /* appuie sur le bouton */
+}
+
 strong {
   font-weight: bold; /* ou 700 */
 }
@@ -31,13 +58,6 @@ html, body {
   justify-content: space-between;
 }
 
-.container-header {
-  flex: 0;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
 .container {
   margin-left: 25rem;
   flex: 1;
@@ -46,33 +66,33 @@ html, body {
   height: 100%;
 }
 
-.title, .footer {
-  background-color: #F0515A;
-  height: 6.4rem;
-  color: #fff;
-  padding: 2rem;
+@media (max-width: 1000px) {
+  .grid {
+    flex-direction: column;
+  }
+  .container {
+    margin: 5.8rem auto;
+    flex-direction: column;
+    height: fit-content;
+    width: 100%;
+  }
 }
-.title h1, .footer h1 {
-  text-transform: uppercase;
-  font-size: 2rem;
-}
-
-.action {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 90%;
-  margin: 3.5rem auto;
-}
-
 header {
+  flex: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   position: fixed;
   background-color: #323232;
+  z-index: 1000;
 }
 header nav {
   margin-top: 10rem;
 }
-header nav a {
+header nav ul {
+  list-style-type: none;
+}
+header nav ul a {
   text-decoration: none;
   color: white;
   display: flex;
@@ -83,60 +103,90 @@ header nav a {
   align-items: center;
 }
 
+@media (max-width: 1000px) {
+  header {
+    width: 100%;
+    height: fit-content;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  header nav {
+    margin: 0.5rem;
+  }
+  header nav ul {
+    margin: 0.5rem 0;
+    display: flex;
+    flex-direction: row;
+  }
+  header nav ul a {
+    padding: 1rem;
+  }
+  header nav ul a img {
+    display: none;
+  }
+  header .logo-image img {
+    width: 15rem;
+    height: auto;
+  }
+}
+.footer {
+  background-color: #F0515A;
+  height: 6.4rem;
+  color: #fff;
+  padding: 2rem;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 2rem;
+}
+
+input, select {
+  width: 100%;
+  padding: 0.5rem;
+}
+
+input[type=checkbox] {
+  width: auto; /* La checkbox ne doit pas être à 100% */
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+textarea {
+  resize: none;
+  height: 21rem;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  font-size: 2rem;
+}
+
+/* Bouton primaire */
 .primary-btn {
-  display: inline-flex; /* pour aligner l'icône et le texte */
-  align-items: center; /* aligne verticalement */
-  gap: 8px; /* espace entre l'icône et le texte */
-  background-color: #F0515A;
-  color: #FFFFFF;
   border: none;
-  padding: 12px 20px;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.primary-btn img {
-  width: 16px; /* ajuste selon ta préférence */
-  height: 16px;
+.refresh-btn {
+  padding: 0rem;
+  border: none;
 }
 
-.primary-btn:hover {
-  background-color: #b81d27; /* une teinte plus foncée au hover */
-  transform: translateY(-2px); /* effet léger de "lift" */
-}
-
-.primary-btn:active {
-  transform: translateY(0); /* appuie sur le bouton */
-}
-
+/* Bouton secondaire */
 .secondary-btn {
-  display: inline-flex; /* pour aligner l'icône et le texte */
-  align-items: center; /* aligne verticalement */
-  gap: 8px; /* espace entre l'icône et le texte */
-  background-color: #F0515A;
-  color: #FFFFFF;
   border: 1px solid #fff;
-  padding: 12px 20px;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.secondary-btn img {
-  width: 16px; /* ajuste selon ta préférence */
-  height: 16px;
-}
-
-.secondary-btn:hover {
-  background-color: #b81d27; /* une teinte plus foncée au hover */
-  transform: translateY(-2px); /* effet léger de "lift" */
-}
-
-.secondary-btn:active {
-  transform: translateY(0); /* appuie sur le bouton */
 }
 
 .search-container {
@@ -246,43 +296,6 @@ td:nth-child(8) {
   text-align: center;
 }
 
-.row {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 2rem;
-}
-
-.col {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  gap: 2rem;
-}
-
-input, select {
-  width: 100%;
-  padding: 0.5rem;
-}
-
-input[type=checkbox] {
-  width: auto; /* La checkbox ne doit pas être à 100% */
-}
-
-label {
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
-
-textarea {
-  resize: none;
-  height: 21rem;
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  font-size: 2rem;
-}
-
 /* The Modal (background) */
 .modal {
   display: none; /* Hidden by default */
@@ -351,6 +364,35 @@ textarea {
 .img-produit {
   width: 100%;
   object-fit: contain;
+}
+
+@media (max-width: 1000px) {
+  .modal {
+    width: 100%;
+    margin-top: 5.8rem;
+  }
+  .modal .modal-body {
+    width: 100%;
+  }
+}
+.title {
+  background-color: #F0515A;
+  height: 6.4rem;
+  color: #fff;
+  padding: 2rem;
+}
+.title h1 {
+  text-transform: uppercase;
+  font-size: 2rem;
+}
+
+.action {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 90%;
+  margin: 3.5rem auto;
+  gap: 1rem;
 }
 
 /*# sourceMappingURL=styles.css.map */

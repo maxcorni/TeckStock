@@ -1,24 +1,70 @@
-let donnees = [];
-let poubelle = [];
+let donnees = loadProduits(); 
+let poubelle = JSON.parse(localStorage.getItem('poubelle')) || [];
 const liste = document.getElementById('listeProduits');
 const form = document.getElementById('form');
 
-// Charger les données JSON
+
+function refresh(){
+    localStorage.clear();
+}
+
+function loadProduits() {
+    const produitsStockes = localStorage.getItem('produits');
+    return produitsStockes ? JSON.parse(produitsStockes) : [];
+}
+
+function saveProduits() {
+    localStorage.setItem('produits', JSON.stringify(donnees));
+    localStorage.setItem('poubelle', JSON.stringify(poubelle));
+}
+
 fetch('produits.json')
     .then(function(response) {
         return response.json();
     })
     .then(function(data) {
-        donnees = data;
-        populateCategories(); // Remplir les catégories dans le formulaire
-        afficherProduits(); // Afficher les produits
-        generateProductModals();
+        const produitsStockes = localStorage.getItem('produits');
+        if (produitsStockes) {
+            donnees = JSON.parse(produitsStockes);
+        } else {
+            const produitsSupprimesDefinitivement = JSON.parse(localStorage.getItem('produitsSupprimesDefinitivement')) || [];
+            const poubelle = JSON.parse(localStorage.getItem('poubelle')) || [];
+
+            const produitsSansDoublon = data.filter(produit => 
+                !poubelle.some(p => p && p.reference === produit.reference) && 
+                !produitsSupprimesDefinitivement.some(p => p && p.reference === produit.reference)
+            );
+
+            donnees = produitsSansDoublon;
+        }
+
+        populateCategories(); 
+        afficherProduits(); 
+        generateProductModals(); 
     })
     .catch(function(error) {
         console.error("Erreur lors du chargement du fichier JSON : ", error);
     });
 
-// Afficher les produits dans le tableau principal
+
+
+
+
+function clearErrors() {
+    const errorMessages = document.querySelectorAll(".error-message");
+    errorMessages.forEach(error => error.innerText = "");
+    window.errorCount = 0;
+}
+
+function validateField(value, condition, errorElement, errorMessage) {
+    if (condition(value)) {
+        errorElement.innerText = errorMessage;
+        window.errorCount++;
+    } else {
+        errorElement.innerText = "";
+    }
+}
+
 function afficherProduits() {
     liste.innerHTML = "";
     donnees.forEach((produit) => {
@@ -40,8 +86,10 @@ function afficherProduits() {
     });
 }
 
-// Afficher les produits supprimés dans la modale poubelle
+
 function afficherPoubelle() {
+    let poubelle = JSON.parse(localStorage.getItem('poubelle')) || [];
+
     const trashTableBody = document.querySelector('#trashModal tbody');
     trashTableBody.innerHTML = "";
 
@@ -54,7 +102,8 @@ function afficherPoubelle() {
             <td>${produit.libelle}</td>
             <td>${produit.prix}€</td>
             <td><img src="assets/images/icons/${produit.stock > 0 ? 'green-circle.png' : 'red-circle.png'}" alt="Stock icon"></td>
-            <td><button onClick="restaurer('${produit.reference}')"><img src="assets/images/icons/green-circle.png" alt="Restore icon"></button></td>
+            <td><button onClick="restaurer('${produit.reference}')"><img src="assets/images/icons/restore.png" alt="Restore icon"></button></td>
+            <td><button onClick="supprimerDefinitivement('${produit.reference}')"><img src="assets/images/icons/trash.png" alt="Trash icon"></button></td>
         `;
 
         tr.innerHTML = contenu;
@@ -62,20 +111,37 @@ function afficherPoubelle() {
     });
 }
 
-// Remplir les catégories dans le formulaire d'ajout
 function populateCategories() {
     const categories = Array.from(new Set(donnees.map(produit => produit.categorie)));
     const categorieSelect = document.getElementById('categorie');
-    categorieSelect.innerHTML = `<option value="">Choisir la catégorie</option>`;
+
+    categorieSelect.innerHTML = '<option value="">-- Sélectionner une catégorie --</option>';
+
     categories.forEach(categorie => {
         let option = document.createElement('option');
         option.value = categorie;
         option.textContent = categorie;
         categorieSelect.appendChild(option);
     });
+
+    categorieSelect.dispatchEvent(new Event('change'));
 }
 
-// Gérer les modales
+
+document.getElementById('categorie').addEventListener('change', function() {
+    const selectedCategory = this.value;
+    const referenceInput = document.getElementById('reference');
+
+    // Trouver le premier produit de la catégorie sélectionnée
+    const produit = donnees.find(p => p.categorie === selectedCategory);
+    
+    if (produit) {
+        referenceInput.value = produit.reference.substring(0, 3).toUpperCase(); 
+    } else {
+        referenceInput.value = ''; // Réinitialiser si pas de produit
+    }
+});
+
 let modal = document.getElementById("addProductModal");
 let trash = document.getElementById("trashModal"); 
 let trashButton = document.getElementById("trashButton");
@@ -84,71 +150,96 @@ let closeButton = document.getElementById("closeButton");
 let closeTrashButton = document.getElementById("closeTrashButton");
 
 
-// Ouvrir la modale d'ajout
 addButton.onclick = function() {
     modal.style.display = "block";
+    form.reset();
+    document.getElementById('categorie').value = ""; // Remet la catégorie à l'option par défaut
+    document.getElementById('reference').value = ""; // Vider la référence aussi
+    document.getElementById('categorie').dispatchEvent(new Event('change')); // Forcer le changement
 };
+
 
 trashButton.onclick = function() {
     trash.style.display = "block";
     afficherPoubelle(); 
 };
 
-// Fermer les modales
 closeTrashButton.onclick = function() {
     trash.style.display = "none";
 };
 
-// Fermer les modales
 closeButton.onclick = function() {
     modal.style.display = "none";
     form.reset();
 };
 
-// Formulaire d'ajout ou modification
 form.addEventListener('submit', function(event) {
     event.preventDefault();
+    clearErrors(); 
 
-    let reference = document.getElementById('reference').value;
-    let libelle = document.getElementById('libelle').value;
-    let description = document.getElementById('description').value;
-    let prix = document.getElementById('prix').value;
+    let reference = document.getElementById('reference').value.trim()
+    let libelle = document.getElementById('libelle').value.trim();
+    let description = document.getElementById('description').value.trim();
+    let prix = document.getElementById('prix').value.replace(/[^\d.]/g, '').trim();
     let categorie = document.getElementById('categorie').value;
-    let photo = document.getElementById('photo').value;
+    let photo = document.getElementById('photo').value.trim();
     let stock = document.getElementById('stock').checked;
+    let referenceError = document.getElementById("error-reference");
+    let libelleError = document.getElementById("error-libelle");
+    let prixError = document.getElementById("error-prix");
+    let photoError = document.getElementById("error-photo");
+    let descriptionError = document.getElementById("error-description");
+    let categorieError = document.getElementById("error-categorie");
 
-    let produitExistant = donnees.find(p => p.reference === reference);
 
-    if (produitExistant) {
-        produitExistant.libelle = libelle;
-        produitExistant.description = description;
-        produitExistant.prix = prix;
-        produitExistant.categorie = categorie;
-        produitExistant.photo = photo;
-        produitExistant.stock = stock;
-        console.log("Produit modifié :", produitExistant);
+
+    const regexReference = /^[A-Z]{3}\d{3,}$/;
+    const regexPrix = /^\d+\.\d{2}$/;
+    const regexPhoto = /^[a-zA-Z0-9_-]+(?:\d+)?\.(jpg|jpeg|png|gif|bmp|webp)$/;
+
+    validateField(categorie, val => val === "", categorieError, "Veuillez sélectionner une catégorie");
+    validateField(reference, val => !regexReference.test(val), referenceError, "Référence invalide (6-10 caractères)");
+    validateField(libelle, val => val.length < 15 || val.length > 100, libelleError, "Libellé invalide (15-100 caractères)");
+    validateField(prix, val => !regexPrix.test(val), prixError, "Prix invalide au moins deux chiffre apres la virgule plus devise");
+    validateField(photo, val => !regexPhoto.test(val), photoError, "Photo invalide (mettre le .png ou autre)");
+    validateField(description, val => val.length < 15 || val.length > 200, descriptionError, "Description invalide (15-200 caractères)");
+
+    if (window.errorCount > 0) {
+        result.innerHTML = `<p>Il reste des erreurs</p>`;
+        return; 
     } else {
-        let nouveauProduit = {
-            reference,
-            libelle,
-            description,
-            prix,
-            categorie,
-            photo,
-            stock
-        };
-        donnees.push(nouveauProduit);
-        console.log("Nouveau produit ajouté :", nouveauProduit);
-    }
+        let produitExistant = donnees.find(p => p.reference === reference);
 
-    form.reset();
-    document.getElementById('reference').value = "";
-    modal.style.display = "none";
-    afficherProduits();
-    generateProductModals();
+        if (produitExistant) {
+            produitExistant.libelle = libelle;
+            produitExistant.description = description;
+            produitExistant.prix = prix;
+            produitExistant.categorie = categorie;
+            produitExistant.photo = photo;
+            produitExistant.stock = stock;
+            saveProduits();
+        } else {
+            let nouveauProduit = {
+                reference,
+                libelle,
+                description,
+                prix,
+                categorie,
+                photo,
+                stock
+            };
+            donnees.push(nouveauProduit);
+            saveProduits();
+        }
+
+        form.reset();
+        document.getElementById('reference').value = "";
+        modal.style.display = "none";
+        afficherProduits();
+        generateProductModals();
+    }
 });
 
-// Modifier un produit
 function modifier(reference) {
     let produit = donnees.find(p => p.reference === reference);
     if (produit) {
@@ -164,30 +255,49 @@ function modifier(reference) {
     }
 }
 
-// Supprimer un produit (l'envoyer à la poubelle)
 function supprimer(reference) {
     let produitSupprime = donnees.find(p => p.reference === reference);
     if (produitSupprime) {
         donnees = donnees.filter(produit => produit.reference !== reference);
         poubelle.push(produitSupprime);
+        saveProduits(); 
         afficherProduits();
         generateProductModals();
     }
 }
 
-// Restaurer un produit depuis la poubelle
 function restaurer(reference) {
     let produitRestauré = poubelle.find(p => p.reference === reference);
     if (produitRestauré) {
         poubelle = poubelle.filter(produit => produit.reference !== reference);
         donnees.push(produitRestauré);
+        saveProduits(); 
         afficherProduits();
-        afficherPoubelle(); // Refresh la vue de la poubelle après restauration
+        afficherPoubelle(); 
         generateProductModals();
     }
 }
 
-// Générer toutes les modales de détail produit
+function supprimerDefinitivement(reference) {
+    let poubelle = JSON.parse(localStorage.getItem('poubelle')) || [];
+    let produitsSupprimesDefinitivement = JSON.parse(localStorage.getItem('produitsSupprimesDefinitivement')) || [];
+    
+    const produitIndex = poubelle.findIndex(produit => produit.reference === reference);
+    
+    if (produitIndex === -1) {
+        console.error('Produit non trouvé dans la poubelle');
+        return;
+    }
+
+    const produitSupprime = poubelle[produitIndex];
+    produitsSupprimesDefinitivement.push(produitSupprime);
+    localStorage.setItem('produitsSupprimesDefinitivement', JSON.stringify(produitsSupprimesDefinitivement));
+    poubelle = poubelle.filter(produit => produit.reference !== reference);
+    localStorage.setItem('poubelle', JSON.stringify(poubelle));
+
+    afficherPoubelle();
+}
+
 function generateProductModals() {
     const existingModals = document.querySelectorAll('.product-modal');
     existingModals.forEach(modal => modal.remove());
@@ -236,26 +346,9 @@ function generateProductModals() {
     });
 }
 
-// Fonction pour ouvrir la modale spécifique d'un produit
 function voir(reference) {
     const modal = document.getElementById(`productModal-${reference}`);
     if (modal) {
         modal.style.display = "block";
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
