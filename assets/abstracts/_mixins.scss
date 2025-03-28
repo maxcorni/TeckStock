@@ -1,30 +1,37 @@
+@use "variables" as *;
+@use "colors" as *;
+
+$icon-size: 1.6rem; // Taille dédiée pour les icônes
+
+@mixin flex($direction: column, $justify: space-between, $align: center) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $justify;
+    align-items: $align;
+}
 
 %btn-common {
-    display: inline-flex; /* pour aligner l'icône et le texte */
-    align-items: center;  /* aligne verticalement */
-    gap: 8px;             /* espace entre l'icône et le texte */
-    
-    background-color: #F0515A;
-    color: #FFFFFF;
-    padding: 12px 20px;
-    font-size: 16px;
+    @include flex(row, space-between, center);
+    gap: $spacing-low; // Utilisation de la variable de spacing
+    background-color: $red; // Utilisation de la variable pour la couleur de fond
+    color: $white; // Utilisation de la variable pour la couleur du texte
+    padding: $spacing-mid $spacing-high; // Utilisation des variables de spacing
+    font-size: $font-mid; // Utilisation de la variable pour la taille de la police
     font-weight: 500;
-    
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
-  }
-  
-  %btn-common img {
-    width: 16px; /* ajuste selon ta préférence */
-    height: 16px;
-  }
-  
-  %btn-common:hover {
-    background-color: #b81d27; /* une teinte plus foncée au hover */
-    transform: translateY(-2px); /* effet léger de "lift" */
-  }
-  
-  %btn-common:active {
-    transform: translateY(0); /* appuie sur le bouton */
-  }
-  
+
+    img {
+        width: $icon-size; // Taille spécifique pour les icônes
+        height: $icon-size; // Taille spécifique pour les icônes
+    }
+
+    &:hover {
+        background-color: $dark-red; // Utilisation de la variable pour le fond au survol
+        transform: translateY(-2px);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+}

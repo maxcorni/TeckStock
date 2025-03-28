@@ -1,6 +1,9 @@
-.footer{
-    background-color: #F0515A;
+@use "../abstracts/index" as *;
+
+
+.footer {
+    background-color: $red;
     height: 6.4rem;
-    color: #fff;
-    padding: 2rem;
+    color: $white;
+    padding: $spacing-mid;
 }

@@ -1,22 +1,22 @@
+@use "../abstracts/index" as *;
 
 .search-container {
-  position: relative; /* conteneur parent */
-  width: 500px; /* la largeur que tu veux */
+  position: relative;
+  width: 50rem;
 }
 
 #searchBar {
   width: 100%;
-  padding: 10px 40px 10px 10px; /* espace à droite pour l'icône */
-  border: 1px solid #B7B7B7;
+  padding: $spacing-low $spacing-xhigh $spacing-low $spacing-low;
+  border: $border-width solid $border-color;
 }
 
 .search-icon {
   position: absolute;
-  right: 10px; /* ajuste comme tu veux */
+  right: $spacing-low;
   top: 50%;
   transform: translateY(-50%);
-  width: 20px; /* taille de l’icône */
-  height: 20px;
+  width: $spacing-mid;
+  height: $spacing-mid;
   cursor: pointer;
 }
-

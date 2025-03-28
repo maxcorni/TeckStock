@@ -1,33 +1,44 @@
+@use "../abstracts/index" as *;
+
+
 html, body {
     height: 100%;
+    background-color: $white;
 }
 
 .grid {
-    display: flex;
-    flex-direction: row;
+    @include flex(row, space-between);  
     height: 100%;
-    justify-content: space-between; 
 }
 
+.row {
+    @include flex(row, space-between); 
+    gap: $spacing-high; 
+}
+
+.col {
+    @include flex(column, unset, unset); 
+    flex: 1;
+    gap: $spacing-high; 
+}
 
 
 .container {
     margin-left: 25rem;
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    height: 100%; 
+    @include flex(column, unset, unset);  
+    height: 100%;
 }
-
 
 @media (max-width: 1000px) {
     .grid {
-        flex-direction: column;
+        @include flex(column);  
     }
+    
     .container {
         margin: 5.8rem auto;
-        flex-direction: column;
+        @include flex(column, unset, unset);  
         height: fit-content;
-        width: 100%; 
+        width: 100%;
     }
 }

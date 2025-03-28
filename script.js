@@ -316,33 +316,24 @@ function generateProductModals() {
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col">	
-                            <img src="imagesProduits/${produit.photo}" alt="${produit.libelle}" class="img-produit">
-                        </div>	
-                        <div class="col">
-                            <div class="row">
-                                <p><strong>${produit.libelle}</strong></p>
-                                <img src="assets/images/icons/${produit.stock > 0 ? 'green-circle.png' : 'red-circle.png'}" alt="Stock icon">
-                            </div>
-                            <div class="row">
-                                <p><strong>Référence :</strong> ${produit.reference}</p>
-                                <p><strong>${produit.prix} €</strong></p>
-                            </div>
-                            <p>${produit.categorie}</p>
-                            <p>${produit.description}</p>
+                    <div class="col">	
+                        <img src="imagesProduits/${produit.photo}" alt="${produit.libelle}" class="img-produit">
+                        <div class="row">
+                            <p><strong>${produit.libelle}</strong></p>
+                            <img src="assets/images/icons/${produit.stock > 0 ? 'green-circle.png' : 'red-circle.png'}" alt="Stock icon">
                         </div>
+                        <div class="row">
+                            <p><strong>Référence :</strong> ${produit.reference}</p>
+                            <p><strong>${produit.prix} €</strong></p>
+                        </div>
+                        <p>${produit.categorie}</p>
+                        <p>${produit.description}</p>
                     </div>
                 </div>
             </div>
         `;
 
         document.body.appendChild(modal);
-
-        const closeBtn = modal.querySelector('.close-btn');
-        closeBtn.onclick = function() {
-            modal.style.display = 'none';
-        };
     });
 }
 
