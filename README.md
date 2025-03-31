@@ -4,7 +4,7 @@
 # TechStock
 
 TechStock est une interface de gestion de stock de produits technologiques développée par Maxime Cornillon dans le cadre du projet de formation Webecom 2025. Ce projet est disponible sur GitHub Pages.
-[https://maxcorni.github.io/techstock/](https://maxcorni.github.io/TechStock/)
+[https://maxcorni.github.io/TechStock/](https://maxcorni.github.io/TechStock/)
 
 ---
 
