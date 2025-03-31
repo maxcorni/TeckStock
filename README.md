@@ -25,7 +25,7 @@ TECHSTOCK-FINAL ├── .gitignore ├── index.html ├── package-lock
 1. Clone le projet depuis GitHub :
 
     ```bash
-    git clone https://github.com/ton-utilisateur/techstock.git
+    git clone https://github.com/maxcorni/techstock.git
     ```
 
 2. Installe les dépendances (si tu utilises npm) :
